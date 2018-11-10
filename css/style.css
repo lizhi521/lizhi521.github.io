@@ -419,6 +419,7 @@ section.main .post .content .video-container embed {
 .menu-bg .menu-container ul {
   list-style-type: none;
   margin-bottom: 0;
+  padding:0;
 }
 .menu-bg .menu-container ul li {
   text-align: right;
