@@ -101,10 +101,14 @@ section.main {
 }
 section.main .post {
   margin-top: 200px;
+  border-bottom: 2px dashed;
+  border-color: #f00;
 }
 @media (max-width: 33.9em) {
   section.main .post {
     margin-top: 60px;
+    border-bottom: 2px dashed;
+    border-color: #f00;
   }
 }
 section.main .post .post-header {
