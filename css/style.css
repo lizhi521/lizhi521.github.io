@@ -23,6 +23,7 @@ body {
   z-index: -2;
 }
 .bg-pattern {
+  background: url("../img/bg-pattern.png") repeat;
   opacity: 0.5;
   width: 100vw;
   height: 100vh;
@@ -419,7 +420,6 @@ section.main .post .content .video-container embed {
 .menu-bg .menu-container ul {
   list-style-type: none;
   margin-bottom: 0;
-  padding: 0;
 }
 .menu-bg .menu-container ul li {
   text-align: right;
@@ -487,6 +487,7 @@ footer.footer-content {
   padding-top: 100px;
   width: 100%;
   min-height: 350px;
+  background: #0f1516;
   color: #d7ecff;
   border-top: 1px dotted #d7ecff;
   text-align: center;
