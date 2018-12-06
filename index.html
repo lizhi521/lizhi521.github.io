@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-19T22:13:18+08:00">
-                2018-11-19
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-06T22:30:06+08:00">
+                2018-12-06
               </time>
             
           </span>
@@ -367,7 +367,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5
+                  305
                 </span>
               
 
@@ -394,8 +394,17 @@
       
         
           
-            <p>这是我的diy</p>
-
+            <h2 id="vuex是什么？"><a href="#vuex是什么？" class="headerlink" title="vuex是什么？"></a>vuex是什么？</h2><p>vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。</p>
+<p>下面是vuex入门的步骤。</p>
+<h2 id="安装vuex"><a href="#安装vuex" class="headerlink" title="安装vuex"></a>安装vuex</h2><p>首先，利用vue-cli脚手架创建一个项目，并且安装vuex。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure></p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>新建一个vuex文件夹，并且在文件夹下创建一个store.js文件，这个store.js文件就是一个仓库。<br><img src="/images/jiegou.png" alt="项目结构"></p>
+<h2 id="引入vuex"><a href="#引入vuex" class="headerlink" title="引入vuex"></a>引入vuex</h2><p>创建了stor仓库后，需要我们在main.js文件中引入store.js文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import store from &apos;./vuex/store&apos;</span><br></pre></td></tr></table></figure>
+<p>并且在main.js文件中，把store注入到应用中(app),这样应用中的所有组件都可以通过this.$store来调用仓库里的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  store,</span><br><span class="line">  render: h =&gt; h(App),</span><br><span class="line">&#125;).$mount(&apos;#app&apos;)</span><br></pre></td></tr></table></figure>
+<p>现在开始动手做一个小实例。<br>场景：父组件仅仅作为显示数据的状态，改变数据状态的逻辑（行为）放在子组件里，有四个行为，所以有四个组件，它们分别是加(increment.vue)、减(decrement.vue)、乘(divided.vue)及除(multiply.vue)。</p>
+<p><img src="/images/xiangmu1.png" alt="小实例"></p>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><h2 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h2><h2 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h2><h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2>
           
         
       
