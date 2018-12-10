@@ -86,20 +86,20 @@
 
 
 
-<meta name="description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。 安装vuex首先，利用vue-cli脚手架创建一个项目，并且安装vuex。1npm install vuex --save 项目结构新建一个vuex文件夹，并且在文件夹下创建一个store.js文件，这个">
+<meta name="description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。">
 <meta name="keywords" content="vue,vuex">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vuex学习">
+<meta property="og:title" content="vuex 入门">
 <meta property="og:url" content="http://lizhi521github.io/2018/11/19/vuex/index.html">
 <meta property="og:site_name" content="深Du">
-<meta property="og:description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。 安装vuex首先，利用vue-cli脚手架创建一个项目，并且安装vuex。1npm install vuex --save 项目结构新建一个vuex文件夹，并且在文件夹下创建一个store.js文件，这个">
+<meta property="og:description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。">
 <meta property="og:locale" content="简体中文">
 <meta property="og:image" content="http://lizhi521github.io/images/jiegou.png">
 <meta property="og:image" content="http://lizhi521github.io/images/xiangmu1.png">
-<meta property="og:updated_time" content="2018-12-06T14:30:06.000Z">
+<meta property="og:updated_time" content="2018-12-09T13:07:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vuex学习">
-<meta name="twitter:description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。 安装vuex首先，利用vue-cli脚手架创建一个项目，并且安装vuex。1npm install vuex --save 项目结构新建一个vuex文件夹，并且在文件夹下创建一个store.js文件，这个">
+<meta name="twitter:title" content="vuex 入门">
+<meta name="twitter:description" content="vuex是什么？vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。 下面是vuex入门的步骤。">
 <meta name="twitter:image" content="http://lizhi521github.io/images/jiegou.png">
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <title>vuex学习 | 深Du</title>
+  <title>vuex 入门 | 深Du</title>
   
 
 
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vuex学习</h1>
+          <h1 class="post-title" itemprop="name headline">vuex 入门</h1>
         
 
         <div class="post-meta">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-12-06T22:30:06+08:00">
-                2018-12-06
+              <time title="更新于" itemprop="dateModified" datetime="2018-12-09T21:07:02+08:00">
+                2018-12-09
               </time>
             
           </span>
@@ -374,7 +374,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  305
+                  1.2k
                 </span>
               
 
@@ -400,16 +400,35 @@
 
       
         <h2 id="vuex是什么？"><a href="#vuex是什么？" class="headerlink" title="vuex是什么？"></a>vuex是什么？</h2><p>vuex是专为vue.js应用程序开发的状态管理模式。它把应用的所有组件的状态存储在一个仓库里。个人理解就是定义数据的初始值，并改变、监控数据的变化。</p>
-<p>下面是vuex入门的步骤。</p>
+<p>下面是vuex入门的步骤。<br><a id="more"></a></p>
 <h2 id="安装vuex"><a href="#安装vuex" class="headerlink" title="安装vuex"></a>安装vuex</h2><p>首先，利用vue-cli脚手架创建一个项目，并且安装vuex。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install vuex --save</span><br></pre></td></tr></table></figure></p>
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><p>新建一个vuex文件夹，并且在文件夹下创建一个store.js文件，这个store.js文件就是一个仓库。<br><img src="/images/jiegou.png" alt="项目结构"></p>
 <h2 id="引入vuex"><a href="#引入vuex" class="headerlink" title="引入vuex"></a>引入vuex</h2><p>创建了stor仓库后，需要我们在main.js文件中引入store.js文件。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import store from &apos;./vuex/store&apos;</span><br></pre></td></tr></table></figure>
 <p>并且在main.js文件中，把store注入到应用中(app),这样应用中的所有组件都可以通过this.$store来调用仓库里的数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  store,</span><br><span class="line">  render: h =&gt; h(App),</span><br><span class="line">&#125;).$mount(&apos;#app&apos;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  store, </span><br><span class="line">  render: h =&gt; h(App),</span><br><span class="line">&#125;).$mount(&apos;#app&apos;)</span><br></pre></td></tr></table></figure>
 <p>现在开始动手做一个小实例。<br>场景：父组件仅仅作为显示数据的状态，改变数据状态的逻辑（行为）放在子组件里，有四个行为，所以有四个组件，它们分别是加(increment.vue)、减(decrement.vue)、乘(divided.vue)及除(multiply.vue)。</p>
 <p><img src="/images/xiangmu1.png" alt="小实例"></p>
-<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><h2 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h2><h2 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h2><h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p>首先，在store.js文件里，我们要引入vue及vuex</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//store.js</span><br><span class="line">import Vue from &apos;./vue&apos;</span><br><span class="line">import Vuex from &apos;./vuex&apos;</span><br></pre></td></tr></table></figure>
+<p>并调用Vue.use(Vuex)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//store.js</span><br><span class="line">Vue.use(Vuex)</span><br></pre></td></tr></table></figure>
+<p>在vuex store实例的根对象state中初始化数据：count:1;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//store.js</span><br><span class="line">const state = &#123;</span><br><span class="line">    count:1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了能更直观的看见数据的变化，<br>父组件app.vue是展示数据，它有两个字组件left.vue和right.vue(文件名称有点随意了)。left.vue和right.vue分别有两个子组件。<br>在App.vue根组件中，需要展示数据count的变化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//app.vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;显示：&lt;span&gt;&#123;&#123;$store.state.count&#125;&#125;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;left&gt;&lt;/left&gt;</span><br><span class="line">    &lt;right&gt;&lt;/right&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<p>至于我们如何获取count的变化呢？<br>现在state可以出场了！<br>在整个应用中我们都可以this.$store.state.获取数据。<br>通过计算属性把获取的数据return给count.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//app.vue</span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div id=&quot;app&quot;&gt;</span><br><span class="line">    &lt;p&gt;显示：&lt;span&gt;&#123;&#123;count&#125;&#125;&lt;/span&gt;&lt;/p&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;left&gt;&lt;/left&gt;</span><br><span class="line">    &lt;right&gt;&lt;/right&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">computed:&#123;</span><br><span class="line">  count()&#123;</span><br><span class="line">    return this.$store.state.count</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们就可以看见展示的数据（count）了。</p>
+<h2 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h2><p>关于getter的作用，感觉和state差不多，官网介绍的作用场景是当需要从 store 中的 state 中派生出一些状态时。<br>例如：对列表进行过滤并计数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  count () &#123;</span><br><span class="line">    return this.$store.state.count.length;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>state通过计算属性一样可以达到我们需要的效果。<br>接下来我们看看getter的用法。<br>在仓库store.js中，stters需要传入state参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const getters = &#123;</span><br><span class="line">  count (state)&#123;</span><br><span class="line">    return state.count.length</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以通过属性形式访问值store.gettes.count<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;$store.gettes.count&#125;&#125;&lt;/span&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h2><p>现在我们想要点击子组件中的按钮，值的变化怎么向整个应用去传，使其它用到该数据的组件实时的获取到更新后的数据。<br>现在我们就介绍mutation.<br>官网提到：更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。记住这是唯一的方式。唯一！<br>首先，我们需要在store中声明一个mutation对象，数据变化的逻辑可以写在mutation对象下，创建一个逻辑函数DECREMENT，它可以接受state作为第一个参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">  DECREMENT(state)&#123;</span><br><span class="line">    return state.count = state.count + 2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其次，我们如何触发这个逻辑方法呢？<br>答：store.commit 方法。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$store.commit(&apos;DECREMENT&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>但是，往往我们在开发中，改变数据count时，需要把子组件中得到的值传给state中的数据。<br>这是我们额外的参数。即： mutation 的 载荷（payload）</p>
+<h3 id="载荷（payload）"><a href="#载荷（payload）" class="headerlink" title="载荷（payload）"></a>载荷（payload）</h3><p>我们需要修改DECREMENT方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">  DECREMENT(state,payload)&#123;</span><br><span class="line">    return state.count = state.count - payload;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们在触发这个方法时，就得把组件中的值传入<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$store.commit(&apos;DECREMENT&apos;,payload);</span><br></pre></td></tr></table></figure></p>
+<p>注意：Mutation 必须是同步函数，异步函数写在哪里呢？<br>答：action</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>action的作用和mutation一样，都是改变数据状态。但是action提交的是mutation，不是直接改变数据的状态。还有一点就是：Action 可以包含任意异步操作，例如与后台的交互。</p>
+
       
     </div>
     
@@ -450,6 +469,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/09/vue1/" rel="prev" title="vuex 进阶">
+                vuex 进阶 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -528,7 +551,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">文章</span>
                 </a>
               </div>
@@ -550,7 +573,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -583,7 +606,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex是什么？"><span class="nav-number">1.</span> <span class="nav-text">vuex是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vuex"><span class="nav-number">2.</span> <span class="nav-text">安装vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">3.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入vuex"><span class="nav-number">4.</span> <span class="nav-text">引入vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-number">5.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getter"><span class="nav-number">6.</span> <span class="nav-text">Getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutation"><span class="nav-number">7.</span> <span class="nav-text">Mutation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action"><span class="nav-number">8.</span> <span class="nav-text">Action</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex是什么？"><span class="nav-number">1.</span> <span class="nav-text">vuex是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vuex"><span class="nav-number">2.</span> <span class="nav-text">安装vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">3.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入vuex"><span class="nav-number">4.</span> <span class="nav-text">引入vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-number">5.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getter"><span class="nav-number">6.</span> <span class="nav-text">Getter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutation"><span class="nav-number">7.</span> <span class="nav-text">Mutation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#载荷（payload）"><span class="nav-number">7.1.</span> <span class="nav-text">载荷（payload）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Action"><span class="nav-number">8.</span> <span class="nav-text">Action</span></a></li></ol></div>
             
 
           </div>
