@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125; 如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。12345678910var f = () =&amp;gt; v;// 等同于var f = function ()&amp;#12">
+<meta name="description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125;">
 <meta name="keywords" content="ES6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Es6入门之箭头函数">
 <meta property="og:url" content="http://lizhi521github.io/2019/05/02/Es6_03_箭头函数/index.html">
 <meta property="og:site_name" content="深Du">
-<meta property="og:description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125; 如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。12345678910var f = () =&amp;gt; v;// 等同于var f = function ()&amp;#12">
+<meta property="og:description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125;">
 <meta property="og:locale" content="简体中文">
-<meta property="og:updated_time" content="2019-05-05T12:40:36.575Z">
+<meta property="og:updated_time" content="2019-05-05T12:44:19.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Es6入门之箭头函数">
-<meta name="twitter:description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125; 如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。12345678910var f = () =&amp;gt; v;// 等同于var f = function ()&amp;#12">
+<meta name="twitter:description" content="箭头函数基本用法ES6允许使用‘箭头’(=&amp;gt;)定义函数。123456var f = v =&amp;gt; v;// 等同于var f = function (v)&amp;#123;    return v;&amp;#125;">
 
 
 
@@ -303,7 +303,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-05-05T20:40:36+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-05-05T20:44:19+08:00">
                 2019-05-05
               </time>
             
@@ -390,6 +390,7 @@
 
       
         <h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>ES6</code>允许使用‘箭头’(=&gt;)定义函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="params">v</span> =&gt;</span> v;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span> (<span class="params">v</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>如果箭头函数不需要参数或需要多个参数，就使用一个圆括号代表参数部分。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="params">()</span> =&gt;</span> v;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;<span class="keyword">return</span> <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sum = <span class="function">(<span class="params">num1,num2</span>) =&gt;</span> num1 + num2 ;</span><br><span class="line"> <span class="comment">// 等同于</span></span><br><span class="line"> <span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span> (<span class="params">num1,num2</span>)</span>&#123;</span><br><span class="line">     <span class="keyword">return</span> num1 + num2;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
 <p>如果箭头函数的代码块部分多余一条语句，就要使用大括号将它们括起来，并且使用<code>return</code>语句返回。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> sun = <span class="function">(<span class="params">num1,num2</span>) =&gt;</span> &#123;<span class="keyword">return</span> num1 + num2;&#125;</span><br></pre></td></tr></table></figure></p>
 <p>由于大括号被解释为代码块，所以如果箭头函数直接返回一个对象，必须在对象外面加上括号，否则会报错。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 报错</span></span><br><span class="line"><span class="keyword">let</span> getTempItem = <span class="function"><span class="params">id</span> =&gt;</span>&#123;<span class="attr">id</span>:id,<span class="attr">name</span>:<span class="string">'Temp'</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不报错</span></span><br><span class="line"><span class="keyword">let</span> getTempItem = <span class="function"><span class="params">id</span> =&gt;</span>(&#123;<span class="attr">id</span>:id,<span class="attr">name</span>:<span class="string">'Temp'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
