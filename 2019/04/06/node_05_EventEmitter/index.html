@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next mist" lang="简体中文">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍Node.js所有的异步I/O操作在完成时都会发送一个事件到事件队列。Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时触发一个事件，一个fs.readStream对象会在文件被打开时触发一个事件。所有这些产生事件的对象都是events.EventEmitter的实例。">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js入门之EventEmitter">
+<meta property="og:url" content="http://lizhi521github.io/2019/04/06/node_05_EventEmitter/index.html">
+<meta property="og:site_name" content="深Du">
+<meta property="og:description" content="介绍Node.js所有的异步I/O操作在完成时都会发送一个事件到事件队列。Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时触发一个事件，一个fs.readStream对象会在文件被打开时触发一个事件。所有这些产生事件的对象都是events.EventEmitter的实例。">
+<meta property="og:locale" content="简体中文">
+<meta property="og:updated_time" content="2019-04-21T07:49:51.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js入门之EventEmitter">
+<meta name="twitter:description" content="介绍Node.js所有的异步I/O操作在完成时都会发送一个事件到事件队列。Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时触发一个事件，一个fs.readStream对象会在文件被打开时触发一个事件。所有这些产生事件的对象都是events.EventEmitter的实例。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://lizhi521github.io/2019/04/06/node_05_EventEmitter/">
+
+
+
+
+
+  <title>node.js入门之EventEmitter | 深Du</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="简体中文">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">深Du</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">正在充电中···</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-主页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lizhi521github.io/2019/04/06/node_05_EventEmitter/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子士心">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/self.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="深Du">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node.js入门之EventEmitter</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-06T23:00:17+08:00">
+                2019-04-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-04-21T15:49:51+08:00">
+                2019-04-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/" itemprop="url" rel="index">
+                    <span itemprop="name">web前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/web前端/node/" itemprop="url" rel="index">
+                    <span itemprop="name">node</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p><code>Node.js</code>所有的异步<code>I/O</code>操作在完成时都会发送一个事件到事件队列。<br><strong><code>Node.js</code>里面的许多对象都会分发事件：</strong>一个<code>net.Server</code>对象会在每次有新连接时触发一个事件，一个<code>fs.readStream</code>对象会在文件被打开时触发一个事件。<br>所有这些产生事件的对象都是<code>events.EventEmitter</code>的实例。<br><a id="more"></a></p>
+<h3 id="EventEmitter类"><a href="#EventEmitter类" class="headerlink" title="EventEmitter类"></a>EventEmitter类</h3><p><code>events</code>模块只提供了一个对象：<code>events.EventEmitter</code>。<code>EventEmitter</code>的核心就是事件触发与事件监听器功能的封装。<br>通过<code>require(&quot;evnets&quot;)</code>来访问该模块。<br>实例：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//引入events模块</span></span><br><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建eventEmitter对象</span></span><br><span class="line"><span class="keyword">var</span> evnetEmitter = <span class="keyword">new</span> events.EventEmitter();</span><br></pre></td></tr></table></figure></p>
+<p><code>EventEmitter</code>对象如果在实例化时发生错误，会触发<code>error</code>事件。<br>当添加新的监听器时，<code>newListener</code>事件会触发。<br>当监听器被移除时，<code>removeListener</code>事件被触发。<br>简单的<code>EventEmitter</code>用法：<br>创建一个<code>index.js</code>文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> EventEmitter = <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</span><br><span class="line"><span class="keyword">var</span> event = <span class="keyword">new</span> EventEmitter();</span><br><span class="line">event.on(<span class="string">'some_event'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.lg(<span class="string">'some_event事件触发'</span>)</span><br><span class="line">&#125;)</span><br><span class="line">seTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    event.emit(<span class="string">'some_event'</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure></p>
+<p>运行这段代码，1秒后控制台输出‘event事件触发’。其原理是<code>event</code>对象注册了事件<code>some_event</code>的一个监听器，然后通过<code>seTimeout</code>在1秒以后向<code>event</code>对象发送事件<code>some_event</code>,此时会调用<code>some_evnt</code>的监听器。<br>执行结果：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node index.js</span><br><span class="line">some_event事件触发</span><br></pre></td></tr></table></figure></p>
+<p><code>EventEmitter</code>的每个事件有一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。<br>对于每个事件，<code>EventEmitter</code>支持若干个事件监听。<br>当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。<br>实例：index.js<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmiter();</span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">arg1,arg2</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listener1'</span>,arg1,arg2);</span><br><span class="line">&#125;)</span><br><span class="line">emitter.on(<span class="string">'someEvent'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">arg1,arg2</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'listener2'</span>,arg1,arg2)</span><br><span class="line">&#125;)</span><br><span class="line">emitter.emit(<span class="string">'someEvent'</span>,<span class="string">'arg1参数'</span>,<span class="string">'arg2参数'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ node index.js</span><br><span class="line"></span><br><span class="line">listener1 arg1参数 arg2参数</span><br><span class="line">listener2 arg1参数 arg2参数</span><br></pre></td></tr></table></figure></p>
+<p>以上例子中，<code>emitter</code>为事件<code>someEvent</code>注册了两个事件监听器，然后触发了<code>someEvent</code>事件。<br>运行结果中可以看到两个事件监听器回调函数被先后调用。这就是<code>EventEmitter</code>最简单的用法。<br><code>EventEmitter</code>提供了多个属性，如<code>on</code>和<code>emit</code>。<code>on</code>函数用于绑定事件函数，<code>emit</code>属性用于触发一个事件。</p>
+<h3 id="EventEmitter属性"><a href="#EventEmitter属性" class="headerlink" title="EventEmitter属性"></a>EventEmitter属性</h3><h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><blockquote>
+<blockquote>
+<p>addListener(event,listener)<br>为指定事件添加一个监听器数组的尾部。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>on(event,listener)<br>为指定事件注册一个监听器，接受一个字符串event和一个回调函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.on(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">stream</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'someone connected!'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>once(event,listener)<br>为指定事件注册一个单次监听器，即：监听器最多只会触发一次，触发后立即解除该监听器。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.once(<span class="string">'connection'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">stream</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'11111111'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>removeListener(event,listener)<br>移除指定事件的某个监听器，监听器必须是该事件已经注册过的监听器。<br>它接受两个参数，第一个是事件名称，第二个是回调函数名称。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params">stream</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'someone connected!'</span>)</span><br><span class="line">&#125;;</span><br><span class="line">server.on(<span class="string">'connection'</span>,callback);</span><br><span class="line"></span><br><span class="line">server.removelistener(<span class="string">'connection'</span>,callback);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>removeAllListener([event])<br>移除所有事件的所有监听器，如果指定事件，则移除指定事件的所有监听器。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>setMaxlisteners(n)<br>默认情况下，<code>EventEmitters</code>如果你添加的监听器超过10个就会输出警告信息。<br><code>setMaxListeners</code>函数用于提高监听器的默认限制的数量。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>listenners(event)<br>返回指定事件的监听数组。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>emit(event,[arg1],[arg2],[…])<br>按参数的顺序执行每个监听器，如果事件有注册监听返回<code>true</code>，否则返回<code>false</code>。</p>
+</blockquote>
+</blockquote>
+<h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><blockquote>
+<blockquote>
+<p>listenerCount(emitter,event)<br>返回指定事件的监听器数量。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">events.EventEmitter.listenerCount(emitter,evenName)  <span class="comment">//已废弃，不推荐</span></span><br><span class="line">events.emitter.listenerCount(eventName)  <span class="comment">//推荐</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+<h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><blockquote>
+<blockquote>
+<p>newListener<br>event - 字符串，事件名称<br>listener - 处理事件函数<br>该事件在添加新监听器被触发</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>removeListener<br>event - 字符串，事件名称<br>listener - 处理事件函数<br>从指定监听器数组中删除一个监听器。<br><strong>注意：</strong>此操作将会改变处于被删监听器之后的那些监听器的索引。</p>
+</blockquote>
+</blockquote>
+<h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><p>通过<code>connection</code>事件演示<code>EventEmitter</code>类的应用。<br>创建<code>main.js</code>文件<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'event'</span>);</span><br><span class="line"><span class="keyword">var</span> eventEmitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听器1</span></span><br><span class="line"><span class="keyword">var</span> listener1 = <span class="function"><span class="keyword">function</span> <span class="title">listenter1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'监听器listener1执行。'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听器2</span></span><br><span class="line"><span class="keyword">var</span> listener2 = <span class="function"><span class="keyword">function</span> <span class="title">listener2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'监听器 listener2 执行'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//绑定 connection 事件，处理函数listener1</span></span><br><span class="line">eventEmitter.addListener(<span class="string">'connection'</span>,listener1);</span><br><span class="line"></span><br><span class="line"><span class="comment">//绑定 connection 事件，处理函数为listener2</span></span><br><span class="line">eventEmitter.on(<span class="string">'connection'</span>,listener2);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> eventListeners = eventEmitter.listenerCount(<span class="string">'connection'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(eventListener + <span class="string">"个监听器监听连接事件。"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//处理connection事件</span></span><br><span class="line">eventEmitter.emit(<span class="string">'connection'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//移除绑定的listener1函数</span></span><br><span class="line">eventEmitter.removeListener(<span class="string">'connection'</span>,listener1);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'listener1不再受监听。'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//触发连接事件</span></span><br><span class="line">eventEmitter.emit(<span class="string">'connection'</span>);</span><br><span class="line"></span><br><span class="line">eventListeners = eventEmitter.listenerCount(<span class="string">'connection'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(eventListeners + <span class="string">"个监听器监听连接事件。"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'程序执行完毕。'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js</span><br><span class="line"></span><br><span class="line">2 个监听器监听连接事件。</span><br><span class="line">监听器 listener1 执行。</span><br><span class="line">监听器 listener2 执行。</span><br><span class="line">listener1 不再受监听。</span><br><span class="line">监听器 listener2 执行。</span><br><span class="line">1 个监听器监听连接事件。</span><br><span class="line">程序执行完毕。</span><br></pre></td></tr></table></figure></p>
+<h3 id="error事件"><a href="#error事件" class="headerlink" title="error事件"></a>error事件</h3><p><code>EventEmitter</code>定义了一个特殊的事件<code>error</code>，它包含了错误的语义，遇到异常的时候通常会触发<code>error</code>事件。<br>当<code>error</code>被触发时，<code>EventEmitter</code>规定如果没有响应的监听器，<code>Node.js</code>会把它当作异常，退出程序并输出错误信息。<br>因此，需要为可能会触发<code>error</code>事件的对象设置监听器，避免遇到错误后整个程序崩溃。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> events = <span class="built_in">require</span>(<span class="string">'events'</span>);</span><br><span class="line"><span class="keyword">var</span> emitter = <span class="keyword">new</span> events.EventEmitter();</span><br><span class="line">eimtter.emit(<span class="string">'error'</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="继承EventEmitter"><a href="#继承EventEmitter" class="headerlink" title="继承EventEmitter"></a>继承EventEmitter</h3><p>大多数时候我们不会直接使用<code>EventEmitter</code>，而是在对象中继承它。包括<code>fs</code>、<code>net</code>、<code>http</code>在内的，只要是支持事件响应的核心模块都是<code>EventEmitter</code>的子类。</p>
+<h4 id="为什么要这样做的？"><a href="#为什么要这样做的？" class="headerlink" title="为什么要这样做的？"></a>为什么要这样做的？</h4><p>原因有两点：<br><strong>首先,</strong>具有某个实体功能的对象实现事件符合语义，事件的监听和发生应该是一个对象的方法。<br><strong>其次，</strong><code>JavaScript</code>的对象机制是基于原型的，支持部分多重继承，继承<code>EventEmitter</code>不会打乱对象原有的继承关系。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/05/node_04_EventLoop/" rel="next" title="node.js入门之事件循环">
+                <i class="fa fa-chevron-left"></i> node.js入门之事件循环
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/09/node_06_Buffer/" rel="prev" title="node06Buffer">
+                node06Buffer <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            概述
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/self.jpg" alt="木子士心">
+            
+              <p class="site-author-name" itemprop="name">木子士心</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里，不积小流无以成江海</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EventEmitter类"><span class="nav-number">2.</span> <span class="nav-text">EventEmitter类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EventEmitter属性"><span class="nav-number">3.</span> <span class="nav-text">EventEmitter属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">3.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类方法"><span class="nav-number">3.2.</span> <span class="nav-text">类方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件"><span class="nav-number">3.3.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例"><span class="nav-number">3.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error事件"><span class="nav-number">4.</span> <span class="nav-text">error事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承EventEmitter"><span class="nav-number">5.</span> <span class="nav-text">继承EventEmitter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要这样做的？"><span class="nav-number">5.1.</span> <span class="nav-text">为什么要这样做的？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子士心</span>
+
+  
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
